@@ -134,6 +134,12 @@ try {
             }
         }
 
+        # Clean Azure Blob Storage Container
+        if ($destination -eq "AzureBlob" -and $cleanTargetBeforeCopy)
+        {
+            Write-Verbose "Clean container for Azure Blob copy"
+            Clean-AzureStorageContainer -containerName $containerName -storageContext $storageContext
+        }
         
         # Getting Azure Blob Storage Endpoint
         $blobStorageEndpoint = Get-blobStorageEndpoint -storageAccountName $storageAccount -endpoint $endpoint

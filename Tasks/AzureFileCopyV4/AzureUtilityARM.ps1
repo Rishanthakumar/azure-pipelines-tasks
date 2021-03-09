@@ -354,3 +354,18 @@ function Add-NetworkSecurityRuleConfig
         }
     }
 }
+
+function Clean-AzureStorageContainer
+{
+    param([string]$containerName,
+          [object]$storageContext)
+    
+    if(-not [string]::IsNullOrEmpty($storageAccountName) -and -not [string]::IsNullOrEmpty($storageAccountKey))
+    {
+        $storageAccountName = $storageContext.StorageAccountName
+
+        Write-Verbose "[Azure Call]Clean container: $containerName in storage account: $storageAccountName"
+        Get-AzureStorageBlob -Container $containerName -Context $storageContext | Remove-AzureStorageBlob -Force
+        Write-Verbose "[Azure Call]Clean container: $containerName in storage account: $storageAccountName"
+    }
+}
